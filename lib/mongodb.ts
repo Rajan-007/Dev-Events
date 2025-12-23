@@ -15,7 +15,7 @@ interface MongooseCache {
  * This allows us to store the cache on globalThis without using `any`.
  */
 declare global {
-  // eslint-disable-next-line no-var
+   
   var _mongoose: MongooseCache | undefined;
 }
 
@@ -40,6 +40,10 @@ const MONGODB_URI: string = process.env.MONGODB_URI ?? '';
 if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable in your environment.');
 }
+
+// Debug: Log masked URI to help diagnose connection issues
+const maskedUri = MONGODB_URI.replace(/:([^@]+)@/, ':***@');
+console.log('[MongoDB] Connecting with URI:', maskedUri);
 
 /**
  * Establishes (or reuses) a Mongoose connection to MongoDB.
