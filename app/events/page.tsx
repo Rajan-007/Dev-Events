@@ -1,13 +1,9 @@
 import EventCard from "@/components/EventCard";
 import {IEvent} from "@/database";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+import { GetAllEvents } from "@/lib/actions/event.action";
 
 const EventsPage = async () => {
-    const response = await fetch(`${BASE_URL}/api/events`, {
-        next: { revalidate: 60 }
-    });
-    const { events } = await response.json();
+    const events = await GetAllEvents();
 
     return (
         <section className="py-10">
